@@ -37,5 +37,5 @@ $ avifenc --help
 
 ## License
 
-MIT © [Imagemin](https://github.com/imagemin)
+MIT © [Imagemin](https://github.com/imagemin)<br>
 [libavif](https://github.com/AOMediaCodec/libavif) © 2019 Joe Drago (Released under the BSD License.)
