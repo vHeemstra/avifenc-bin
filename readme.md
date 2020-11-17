@@ -40,4 +40,6 @@ $ avifenc --help
 ## License
 
 MIT © [Imagemin](https://github.com/imagemin)<br>
-[libavif](https://github.com/AOMediaCodec/libavif) © 2019 Joe Drago (Released under the BSD License.)
+[libavif](https://github.com/AOMediaCodec/libavif) © 2019 Joe Drago (Released under the BSD License.)<br>
+This package is made by [Philip van Heemstra](https://github.com/vHeemstra)<br>
+Based on [jpegtran-bin](https://github.com/imagemin/jpegtran-bin) by [Sindre Sorhus](https://github.com/sindresorhus)
