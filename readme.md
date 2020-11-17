@@ -4,6 +4,8 @@
 
 You probably want the [unofficial `imagemin-avifenc`](https://github.com/vheemstra/imagemin-avifenc) instead.
 
+***Note: This is for Windows only (for now).***
+
 
 ## Install
 
