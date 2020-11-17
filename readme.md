@@ -1,6 +1,6 @@
 # avifenc-bin
 
-> This is a **unofficial** bin wrapper for the AVIF encoder from [AOMedia](https://github.com/AOMediaCodec/libavif) for use with [`imagemin`](https://github.com/imagemin/imagemin) and the [unofficial `imagemin-avifenc`](https://github.com/vheemstra/imagemin-avifenc)
+> This is a **unofficial** bin wrapper for the AVIF encoder from [AOMedia's libavif](https://github.com/AOMediaCodec/libavif) for use with [`imagemin`](https://github.com/imagemin/imagemin) and the [unofficial `imagemin-avifenc`](https://github.com/vheemstra/imagemin-avifenc)
 
 You probably want the [unofficial `imagemin-avifenc`](https://github.com/vheemstra/imagemin-avifenc) instead.
 
