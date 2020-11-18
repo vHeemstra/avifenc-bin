@@ -1,20 +1,27 @@
 {
-  "name": "avifenc-bin",
+  "name": "@vheemstra/avifenc-bin",
   "version": "1.0.0",
   "libavif_version": "0.8.3",
   "description": "avifenc bin-wrapper that makes it seamlessly available as a local dependency",
   "license": "MIT",
-  "repository": "github:vheemstra/avifenc-bin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vHeemstra/avifenc-bin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vHeemstra/avifenc-bin/issues"
+  },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "author": {
     "name": "Philip van Heemstra",
     "email": "vanheemstra@gmail.com",
-    "url": "vanheemstra.com"
+    "url": "https://github.com/vheemstra"
   },
   "maintainers": [
     {
       "name": "Philip van Heemstra",
       "email": "vanheemstra@gmail.com",
-      "url": "vanheemstra.com"
+      "url": "https://github.com/vheemstra"
     }
   ],
   "bin": {
