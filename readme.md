@@ -12,7 +12,7 @@ You probably want the [`imagemin-avifenc`](https://github.com/vheemstra/imagemin
 ## Install
 
 ```
-$ npm install --save git+https://github.com/vHeemstra/avifenc-bin.git
+$ npm install --save @vheemstra/avifenc-bin
 ```
 
 
@@ -31,7 +31,7 @@ execFile(avifenc, ['--output', 'output.avif', 'input.jpg'], error => {
 ## CLI
 
 ```
-$ npm install --global git+https://github.com/vHeemstra/avifenc-bin.git
+$ npm install --global @vheemstra/avifenc-bin
 ```
 
 ```
