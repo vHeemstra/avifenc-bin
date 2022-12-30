@@ -20,7 +20,7 @@ $ npm install --save @vheemstra/avifenc-bin
 
 ```js
 import {execFile} from 'node:child_process';
-import avifenc from 'avifenc-bin';
+import avifenc from '@vheemstra/avifenc-bin';
 
 execFile(avifenc, ['--output', 'output.avif', 'input.jpg'], err => {
 	if (err) {
