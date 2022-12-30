@@ -1,25 +1,31 @@
-'use strict';
-const fs = require('fs');
-const path = require('path');
-const test = require('ava');
-const execa = require('execa');
-const tempy = require('tempy');
-const binCheck = require('bin-check');
-const binBuild = require('bin-build');
-const compareSize = require('compare-size');
-const avifenc = require('..');
+import fs from 'node:fs';
+import path from 'node:path';
+import process from 'node:process';
+import {fileURLToPath} from 'node:url';
+import test from 'ava';
+import {execa} from 'execa';
+import {temporaryDirectory} from 'tempy';
+import binCheck from 'bin-check';
+import binBuild from 'bin-build';
+import compareSize from 'compare-size';
+import avifenc from '../index.js';
+
+const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url)));
 
 // TODO: make binary building
 // test('rebuild the avifenc binaries', async t => {
-// 	const temporary = tempy.directory();
-// 	const cfg = [
-// 		'./configure --disable-shared',
-// 		`--prefix="${temporary}" --bindir="${temporary}"`
-// 	].join(' ');
+// 	// Skip the test on Windows
+// 	if (process.platform === 'win32') {
+// 		t.pass();
+// 		return;
+// 	}
 
-// 	await binBuild.file(path.resolve(__dirname, '../vendor/source/libjpeg-turbo-1.5.1.tar.gz'), [
-// 		cfg,
-// 		'make install'
+// 	const temporary = temporaryDirectory();
+// 	const source = fileURLToPath(new URL(`../vendor/source/libavif-${pkg.libavif_version}.tar.gz`, import.meta.url));
+
+// 	await binBuild.file(source, [
+// 		`./configure --disable-shared --prefix="${temporary}" --bindir="${temporary}"`,
+// 		'make && make install',
 // 	]);
 
 // 	t.true(fs.existsSync(path.join(temporary, 'avifenc')));
@@ -29,9 +35,9 @@ test('return path to binary and verify that it is working', async t => {
 	t.true(await binCheck(avifenc, ['--version']));
 });
 
-test('convert a JPG', async t => {
-	const temporary = tempy.directory();
-	const src = path.join(__dirname, 'fixtures/test.jpg');
+test('minify and convert a JPG to AVIF', async t => {
+	const temporary = temporaryDirectory();
+	const src = fileURLToPath(new URL('fixtures/test.jpg', import.meta.url));
 	const dest = path.join(temporary, 'test.avif');
 	const args = [
 		'--output',

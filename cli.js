@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-'use strict';
-const {spawn} = require('child_process');
-const avifenc = require('.');
+import process from 'node:process';
+import {spawn} from 'node:child_process';
+import binPath from './index.js';
 
-const input = process.argv.slice(2);
-
-spawn(avifenc, input, {stdio: 'inherit'})
+spawn(binPath, process.argv.slice(2), {stdio: 'inherit'})
 	.on('exit', process.exit);

@@ -19,10 +19,14 @@ $ npm install --save @vheemstra/avifenc-bin
 ## Usage
 
 ```js
-const {execFile} = require('child_process');
-const avifenc = require('avifenc-bin');
+import {execFile} from 'node:child_process';
+import avifenc from 'avifenc-bin';
 
-execFile(avifenc, ['--output', 'output.avif', 'input.jpg'], error => {
+execFile(avifenc, ['--output', 'output.avif', 'input.jpg'], err => {
+	if (err) {
+		throw err;
+	}
+
 	console.log('Image converted!');
 });
 ```
@@ -39,9 +43,15 @@ $ avifenc --help
 ```
 
 
-## License
+## License & Info
 
 MIT © [Imagemin](https://github.com/imagemin)<br>
 [libavif](https://github.com/AOMediaCodec/libavif) © 2019 Joe Drago (Released under the BSD License.)<br>
 This package is made by [Philip van Heemstra](https://github.com/vHeemstra)<br>
-Based on [jpegtran-bin](https://github.com/imagemin/jpegtran-bin) by [Sindre Sorhus](https://github.com/sindresorhus)
+Based on [jpegtran-bin](https://github.com/imagemin/jpegtran-bin) by [Sindre Sorhus](https://github.com/sindresorhus)<br>
+<br>
+Linux binary from libavif 0.11.1-1 (`vendor/source/libavif-0.11.1-1-x86_64.pkg.tar.zst`):<br>
+[https://archlinux.org/packages/community/x86_64/libavif/](https://archlinux.org/packages/community/x86_64/libavif/)<br>
+<br>
+Info on compiling avifenc for macOS:<br>
+[https://www.reddit.com/r/AV1/comments/hdshcc/how_to_compile_avifenc_avifdec_and_avifdump_tools/](https://www.reddit.com/r/AV1/comments/hdshcc/how_to_compile_avifenc_avifdec_and_avifdump_tools/)
