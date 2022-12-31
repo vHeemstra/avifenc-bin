@@ -1,6 +1,6 @@
 {
   "name": "@vheemstra/avifenc-bin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "libavif_version": "0.11.1",
   "description": "avifenc bin-wrapper that makes it seamlessly available as a local dependency",
   "license": "MIT",
@@ -25,6 +25,7 @@
   ],
   "type": "module",
   "exports": "./index.js",
+  "types": "./index.d.ts",
   "bin": {
     "avifenc": "cli.js"
   },
@@ -37,10 +38,11 @@
   },
   "files": [
     "index.js",
+    "index.d.ts",
     "cli.js",
     "lib",
     "test",
-    "vendor/source"
+    "vendor"
   ],
   "keywords": [
     "imagemin",
