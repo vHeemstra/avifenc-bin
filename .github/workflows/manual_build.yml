@@ -27,7 +27,7 @@ jobs:
         shell: bash
     steps:
       - name: Linux - Install dependencies
-        # if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt update -y
           sudo apt install -y build-essential cmake make ninja-build nasm meson libz-dev libyuv-dev libpng-dev libjpeg-dev
