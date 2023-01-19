@@ -18,6 +18,7 @@ jobs:
   test:
     name: Build on ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: ${{ fromJSON(inputs.os_version) }}
     runs-on: ${{ matrix.os }}
