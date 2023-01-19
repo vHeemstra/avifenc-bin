@@ -42,6 +42,7 @@ jobs:
         run: |
           # sudo apt update -y
           # sudo apt install -y build-essential gcc
+          brew update
           brew install cmake
           brew install ninja
           brew install meson
