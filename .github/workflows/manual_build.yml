@@ -26,11 +26,19 @@ jobs:
       run:
         shell: bash
     steps:
-      - name: Set up Homebrew
+      - name: Linux - Install dependencies
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          sudo apt update -y
+          sudo apt install -y build-essential cmake make ninja-build nasm meson libz-dev libyuv-dev libpng-dev libjpeg-dev
+
+      - name: macOS - Set up Homebrew
+        if: ${{ matrix.os == 'macos-latest' }}
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
-      - name: Install dependencies
+      - name: macOS - Install dependencies
+        if: ${{ matrix.os == 'macos-latest' }}
         run: |
           # sudo apt update -y
           # sudo apt install -y build-essential gcc
