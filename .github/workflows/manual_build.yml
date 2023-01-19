@@ -46,16 +46,19 @@ jobs:
           ls -la
 
       - name: Build libyuv
+        working-directory: ./libavif/ext/
         run: |
-          ./libavif/ext/libyuv.cmd
+          ./libyuv.cmd
 
       - name: Build aom
+        working-directory: ./libavif/ext/
         run: |
-          ./libavif/ext/aom.cmd
+          ./aom.cmd
 
       - name: Build dav1d
+        working-directory: ./libavif/ext/
         run: |
-          ./libavif/ext/dav1d.cmd
+          ./dav1d.cmd
 
       - name: Build libavif binaries
         run: |
@@ -68,19 +71,19 @@ jobs:
 
       - name: Test avifenc
         run: |
-          ./avifenc --version
+          ./libavif/build/avifenc --version
 
       - name: Test avifdec
         run: |
-          ./avifdec --version
+          ./libavif/build/avifdec --version
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.FILENAME }}
           path: |
-            avifenc
-            avifdec
+            ./libavif/build/avifenc
+            ./libavif/build/avifdec
 
       # - if: ${{ matrix.os == 'ubuntu-latest' }}
       #   run: |
