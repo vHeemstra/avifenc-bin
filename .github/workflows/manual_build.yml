@@ -43,9 +43,11 @@ jobs:
           # sudo apt update -y
           # sudo apt install -y build-essential gcc
           brew update
+          brew unlink python@3.11
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
           HOMEBREW_NO_AUTO_UPDATE: 1
+          HOMEBREW_NO_ENV_HINTS: 1
 
       - name: macOS - List Homebrew deps
         if: ${{ matrix.os == 'macos-latest' }}
@@ -70,6 +72,7 @@ jobs:
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
           HOMEBREW_NO_AUTO_UPDATE: 1
+          HOMEBREW_NO_ENV_HINTS: 1
         run: |
           deps="${{ env.homebrewdeps }}"
           for i in ${deps//,/ }
@@ -88,6 +91,7 @@ jobs:
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
           HOMEBREW_NO_AUTO_UPDATE: 1
+          HOMEBREW_NO_ENV_HINTS: 1
         run: |
           mkdir brew-cache
           deps="${{ env.homebrewdeps }}"
