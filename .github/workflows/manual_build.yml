@@ -43,14 +43,61 @@ jobs:
           # sudo apt update -y
           # sudo apt install -y build-essential gcc
           brew update
-          brew install cmake
-          brew install ninja
-          brew install meson
-          brew install nasm
-          brew install libpng
-          brew install jpeg
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+
+
+      - name: List Homebrew deps
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          deps="cmake,ninja,meson,nasm,libpng,jpeg"
+          echo $deps > homebrew-deps.txt
+
+      - name: Restore Homebrew deps from cache
+        if: ${{ matrix.os == 'macos-latest' }}
+        id: cache-homebrew-deps-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: brew-cache
+          key: ${{ runner.os }}-homebrew-deps-${{ hashFiles('homebrew-deps.txt') }}
+
+      - name: Install Homebrew deps from cache
+        if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit == 'true' }}
+        id: try-homebrew-cache
+        working-directory: ./brew-cache/
+        continue-on-error: true
+        run: |
+          deps=$(< homebrew-deps.txt)
+          for i in ${deps//,/ }
+          do
+            if ls *--${i}--*.tar.gz 1> /dev/null 2>&1; then
+              brew install $(ls *--${i}--*.tar.gz)
+            else
+              echo "No archive in cache for ${i}"
+              rm -rf ./brew-cache/
+              exit 1
+            fi
+          done
+
+      - name: Install Homebrew deps
+        if: ${{ matrix.os == 'macos-latest' && (steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' || steps.try-homebrew-cache.outcome == 'failure') }}
+        run: |
+          mkdir brew-cache
+          deps=$(< homebrew-deps.txt)
+          for i in ${deps//,/ }
+          do
+            brew install $i
+            cp $(brew --cache $i) ./brew-cache/
+          done
+
+      - name: Save Homebrew deps to cache
+        if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' }}
+        id: cache-homebrew-deps-save
+        uses: actions/cache/save@v3
+        with:
+          path: brew-cache
+          key: ${{ steps.cache-homebrew-deps-restore.outputs.cache-primary-key }}
+
 
       - name: Clone libavif repo
         run: |
