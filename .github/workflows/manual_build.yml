@@ -1,0 +1,94 @@
+name: Run build
+
+on:
+  workflow_dispatch:
+    inputs:
+      os_version:
+        description: 'Select OS'
+        required: true
+        default: '["ubuntu-latest"]'
+        type: choice
+        options:
+          - '["ubuntu-latest"]'
+          - '["macos-latest"]'
+          - '["ubuntu-latest","macos-latest"]'
+          # - '["windows-latest"]'
+
+jobs:
+  test:
+    name: Build on ${{ matrix.os }})
+    strategy:
+      matrix:
+        os: ${{ fromJSON(inputs.os_version) }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Install dependencies
+        run: |
+          sudo apt update -y
+          sudo apt install -y build-essential gcc
+          brew install cmake
+          brew install ninja
+          brew install meson
+          brew install nasm
+          brew install libpng
+          brew install jpeg
+
+      - name: Clone libavif repo
+        run: |
+          git clone --depth 1 https://github.com/AOMediaCodec/libavif.git
+          cd libavif/ext
+
+      - name: Build libyuv
+        run: |
+          ./libyuv.cmd
+
+      - name: Build aom
+        run: |
+          ./aom.cmd
+
+      - name: Build dav1d
+        run: |
+          ./dav1d.cmd
+
+      - name: Build libavif binaries
+        run: |
+          cd ..
+          mkdir build
+          cd build
+          cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DAVIF_CODEC_AOM=ON -DAVIF_LOCAL_AOM=ON -DAVIF_CODEC_AOM_DECODE=ON -DAVIF_CODEC_AOM_ENCODE=ON -DAVIF_CODEC_DAV1D=ON -DAVIF_LOCAL_DAV1D=ON -DAVIF_LOCAL_LIBYUV=ON -DAVIF_BUILD_APPS=ON ..
+          ninja
+
+      - name: Test avifenc
+        run: |
+          ./avifenc --version
+
+      - name: Test avifdec
+        run: |
+          ./avifdec --version
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.FILENAME }}
+          path: |
+            avifenc
+            avifdec
+
+      # - if: ${{ matrix.os == 'ubuntu-latest' }}
+      #   run: |
+      #     echo ""
+
+      # - if: ${{ matrix.os == 'macos-latest' }}
+      #   run: |
+      #     echo ""
+
+      # - if: ${{ matrix.os == 'windows-latest' }}
+      #   run: |
+      #     echo ""
