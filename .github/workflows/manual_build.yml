@@ -47,7 +47,7 @@ jobs:
 
       - name: Restore cached libs
         id: cache-libs-restore
-      - uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v3
         with:
           path: |
             libavif/ext/libyuv
