@@ -78,7 +78,7 @@ jobs:
           for i in ${deps//,/ }
           do
             if ls *--${i}--*.tar.gz 1> /dev/null 2>&1; then
-              brew install $(ls *--${i}--*.tar.gz)
+              brew list $i || brew install $(ls *--${i}--*.tar.gz)
             else
               echo "No archive in cache for ${i}"
               rm -rf ./brew-cache/
@@ -97,7 +97,7 @@ jobs:
           deps="${{ env.homebrewdeps }}"
           for i in ${deps//,/ }
           do
-            brew install $i
+            brew list $i || brew install $i
             cp $(brew --cache $i) ./brew-cache/
           done
 
