@@ -56,35 +56,35 @@ jobs:
           echo $deps > homebrew-deps.txt
           echo $deps >> $GITHUB_ENV
 
-      - name: macOS - Restore Homebrew deps from cache
-        if: ${{ matrix.os == 'macos-latest' }}
-        id: cache-homebrew-deps-restore
-        uses: actions/cache/restore@v3
-        with:
-          path: brew-cache
-          key: ${{ runner.os }}-homebrew-deps-${{ hashFiles('homebrew-deps.txt') }}
+      # - name: macOS - Restore Homebrew deps from cache
+      #   if: ${{ matrix.os == 'macos-latest' }}
+      #   id: cache-homebrew-deps-restore
+      #   uses: actions/cache/restore@v3
+      #   with:
+      #     path: brew-cache
+      #     key: ${{ runner.os }}-homebrew-deps-${{ hashFiles('homebrew-deps.txt') }}
 
-      - name: macOS - Install Homebrew deps from cache
-        if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit == 'true' }}
-        id: try-homebrew-cache
-        working-directory: ./brew-cache/
-        continue-on-error: true
-        env:
-          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
-          HOMEBREW_NO_AUTO_UPDATE: 1
-          HOMEBREW_NO_ENV_HINTS: 1
-        run: |
-          deps="${{ env.homebrewdeps }}"
-          for i in ${deps//,/ }
-          do
-            if ls *--${i}--*.tar.gz 1> /dev/null 2>&1; then
-              brew list $i || brew install $(ls *--${i}--*.tar.gz)
-            else
-              echo "No archive in cache for ${i}"
-              rm -rf ./brew-cache/
-              exit 1
-            fi
-          done
+      # - name: macOS - Install Homebrew deps from cache
+      #   if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit == 'true' }}
+      #   id: try-homebrew-cache
+      #   working-directory: ./brew-cache/
+      #   continue-on-error: true
+      #   env:
+      #     HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+      #     HOMEBREW_NO_AUTO_UPDATE: 1
+      #     HOMEBREW_NO_ENV_HINTS: 1
+      #   run: |
+      #     deps="${{ env.homebrewdeps }}"
+      #     for i in ${deps//,/ }
+      #     do
+      #       if ls *--${i}--*.tar.gz 1> /dev/null 2>&1; then
+      #         brew list $i || brew install $(ls *--${i}--*.tar.gz)
+      #       else
+      #         echo "No archive in cache for ${i}"
+      #         rm -rf ./brew-cache/
+      #         exit 1
+      #       fi
+      #     done
 
       - name: macOS - Install Homebrew deps
         if: ${{ matrix.os == 'macos-latest' && (steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' || steps.try-homebrew-cache.outcome == 'failure') }}
@@ -98,16 +98,16 @@ jobs:
           for i in ${deps//,/ }
           do
             brew list $i || brew install $i
-            cp $(brew --cache $i) ./brew-cache/
+            # cp $(brew --cache $i) ./brew-cache/
           done
 
-      - name: macOS - Save Homebrew deps to cache
-        if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' }}
-        id: cache-homebrew-deps-save
-        uses: actions/cache/save@v3
-        with:
-          path: brew-cache
-          key: ${{ steps.cache-homebrew-deps-restore.outputs.cache-primary-key }}
+      # - name: macOS - Save Homebrew deps to cache
+      #   if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' }}
+      #   id: cache-homebrew-deps-save
+      #   uses: actions/cache/save@v3
+      #   with:
+      #     path: brew-cache
+      #     key: ${{ steps.cache-homebrew-deps-restore.outputs.cache-primary-key }}
 
 
       - name: Clone libavif repo
