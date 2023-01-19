@@ -46,14 +46,14 @@ jobs:
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
 
-
-      - name: List Homebrew deps
+      - name: macOS - List Homebrew deps
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          deps="cmake,ninja,meson,nasm,libpng,jpeg"
+          deps="homebrewdeps=cmake,ninja,meson,nasm,libpng,jpeg"
           echo $deps > homebrew-deps.txt
+          echo $deps >> $GITHUB_ENV
 
-      - name: Restore Homebrew deps from cache
+      - name: macOS - Restore Homebrew deps from cache
         if: ${{ matrix.os == 'macos-latest' }}
         id: cache-homebrew-deps-restore
         uses: actions/cache/restore@v3
@@ -61,13 +61,13 @@ jobs:
           path: brew-cache
           key: ${{ runner.os }}-homebrew-deps-${{ hashFiles('homebrew-deps.txt') }}
 
-      - name: Install Homebrew deps from cache
+      - name: macOS - Install Homebrew deps from cache
         if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit == 'true' }}
         id: try-homebrew-cache
         working-directory: ./brew-cache/
         continue-on-error: true
         run: |
-          deps=$(< homebrew-deps.txt)
+          deps="${{ env.homebrewdeps }}"
           for i in ${deps//,/ }
           do
             if ls *--${i}--*.tar.gz 1> /dev/null 2>&1; then
@@ -79,18 +79,18 @@ jobs:
             fi
           done
 
-      - name: Install Homebrew deps
+      - name: macOS - Install Homebrew deps
         if: ${{ matrix.os == 'macos-latest' && (steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' || steps.try-homebrew-cache.outcome == 'failure') }}
         run: |
           mkdir brew-cache
-          deps=$(< homebrew-deps.txt)
+          deps="${{ env.homebrewdeps }}"
           for i in ${deps//,/ }
           do
             brew install $i
             cp $(brew --cache $i) ./brew-cache/
           done
 
-      - name: Save Homebrew deps to cache
+      - name: macOS - Save Homebrew deps to cache
         if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' }}
         id: cache-homebrew-deps-save
         uses: actions/cache/save@v3
