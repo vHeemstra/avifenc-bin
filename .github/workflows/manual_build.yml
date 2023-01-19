@@ -45,43 +45,98 @@ jobs:
           git clone --depth 1 https://github.com/AOMediaCodec/libavif.git
           ls -la
 
-      - name: Restore cached libs
-        id: cache-libs-restore
+
+      - name: Restore cached libyuv
+        id: cache-libyuv-restore
         uses: actions/cache/restore@v3
         with:
           path: |
             libavif/ext/libyuv
-            libavif/ext/aom
-            libavif/ext/dav1d
-          key: ${{ runner.os }}-libs
+          key: ${{ runner.os }}-libs-libyuv
 
       - name: Build libyuv
-        if: steps.cache-libs-restore.outputs.cache-hit != 'true'
+        if: steps.cache-libyuv-restore.outputs.cache-hit != 'true'
         working-directory: ./libavif/ext/
         run: |
           ./libyuv.cmd
 
-      - name: Build aom
-        if: steps.cache-libs-restore.outputs.cache-hit != 'true'
-        working-directory: ./libavif/ext/
-        run: |
-          ./aom.cmd
-
-      - name: Build dav1d
-        if: steps.cache-libs-restore.outputs.cache-hit != 'true'
-        working-directory: ./libavif/ext/
-        run: |
-          ./dav1d.cmd
-
-      - name: Save libs to cache
-        id: cache-libs-save
+      - name: Save libyuv to cache
+        id: cache-libyuv-save
         uses: actions/cache/save@v3
         with:
           path: |
             libavif/ext/libyuv
+          key: ${{ steps.cache-libyuv-restore.outputs.cache-primary-key }}
+
+
+      - name: Restore cached libsharpyuv
+        id: cache-libsharpyuv-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            libavif/ext/libsharpyuv
+          key: ${{ runner.os }}-libs-libsharpyuv
+
+      - name: Build libsharpyuv
+        if: steps.cache-libsharpyuv-restore.outputs.cache-hit != 'true'
+        working-directory: ./libavif/ext/
+        run: |
+          ./libsharpyuv.cmd
+
+      - name: Save libsharpyuv to cache
+        id: cache-libsharpyuv-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            libavif/ext/libsharpyuv
+          key: ${{ steps.cache-libsharpyuv-restore.outputs.cache-primary-key }}
+
+
+      - name: Restore cached aom
+        id: cache-aom-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
             libavif/ext/aom
+          key: ${{ runner.os }}-libs-aom
+
+      - name: Build aom
+        if: steps.cache-aom-restore.outputs.cache-hit != 'true'
+        working-directory: ./libavif/ext/
+        run: |
+          ./aom.cmd
+
+      - name: Save aom to cache
+        id: cache-aom-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            libavif/ext/aom
+          key: ${{ steps.cache-aom-restore.outputs.cache-primary-key }}
+
+
+      - name: Restore cached dav1d
+        id: cache-dav1d-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
             libavif/ext/dav1d
-          key: ${{ steps.cache-libs-restore.outputs.cache-primary-key }}
+          key: ${{ runner.os }}-libs-dav1d
+
+      - name: Build dav1d
+        if: steps.cache-dav1d-restore.outputs.cache-hit != 'true'
+        working-directory: ./libavif/ext/
+        run: |
+          ./dav1d.cmd
+
+      - name: Save dav1d to cache
+        id: cache-dav1d-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            libavif/ext/dav1d
+          key: ${{ steps.cache-dav1d-restore.outputs.cache-primary-key }}
+
 
       - name: Build libavif binaries
         run: |
