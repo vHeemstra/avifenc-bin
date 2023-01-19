@@ -66,6 +66,8 @@ jobs:
         id: try-homebrew-cache
         working-directory: ./brew-cache/
         continue-on-error: true
+        env:
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
         run: |
           deps="${{ env.homebrewdeps }}"
           for i in ${deps//,/ }
@@ -81,6 +83,8 @@ jobs:
 
       - name: macOS - Install Homebrew deps
         if: ${{ matrix.os == 'macos-latest' && (steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' || steps.try-homebrew-cache.outcome == 'failure') }}
+        env:
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
         run: |
           mkdir brew-cache
           deps="${{ env.homebrewdeps }}"
