@@ -48,6 +48,8 @@ jobs:
           brew install nasm
           brew install libpng
           brew install jpeg
+        env:
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
 
       - name: Clone libavif repo
         run: |
