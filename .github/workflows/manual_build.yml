@@ -75,7 +75,7 @@ jobs:
 
       - name: Save libs to cache
         id: cache-libs-save
-      - uses: actions/cache/save@v3
+        uses: actions/cache/save@v3
         with:
           path: |
             libavif/ext/libyuv
