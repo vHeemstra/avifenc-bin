@@ -74,7 +74,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           path: |
-            libavif/ext/libsharpyuv
+            libavif/ext/libwebp
           key: ${{ runner.os }}-libs-libsharpyuv
 
       - name: Build libsharpyuv
@@ -88,7 +88,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: |
-            libavif/ext/libsharpyuv
+            libavif/ext/libwebp
           key: ${{ steps.cache-libsharpyuv-restore.outputs.cache-primary-key }}
 
 
