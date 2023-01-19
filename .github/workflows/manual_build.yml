@@ -45,6 +45,7 @@ jobs:
           brew update
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+          HOMEBREW_NO_AUTO_UPDATE: 1
 
       - name: macOS - List Homebrew deps
         if: ${{ matrix.os == 'macos-latest' }}
@@ -68,6 +69,7 @@ jobs:
         continue-on-error: true
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+          HOMEBREW_NO_AUTO_UPDATE: 1
         run: |
           deps="${{ env.homebrewdeps }}"
           for i in ${deps//,/ }
@@ -85,6 +87,7 @@ jobs:
         if: ${{ matrix.os == 'macos-latest' && (steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' || steps.try-homebrew-cache.outcome == 'failure') }}
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+          HOMEBREW_NO_AUTO_UPDATE: 1
         run: |
           mkdir brew-cache
           deps="${{ env.homebrewdeps }}"
