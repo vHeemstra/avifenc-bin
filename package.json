@@ -1,6 +1,6 @@
 {
   "name": "@vheemstra/avifenc-bin",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "libavif_version": "0.11.1",
   "description": "avifenc bin-wrapper that makes it seamlessly available as a local dependency",
   "license": "MIT",
