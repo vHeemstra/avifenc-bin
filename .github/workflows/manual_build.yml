@@ -34,9 +34,9 @@ jobs:
 
       - name: macOS - Set up Homebrew
         if: ${{ matrix.os == 'macos-latest' }}
-        # id: set-up-homebrew
-        # uses: Homebrew/actions/setup-homebrew@master
-        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+        # run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
       - name: macOS - Install dependencies
         if: ${{ matrix.os == 'macos-latest' }}
@@ -44,7 +44,7 @@ jobs:
           # sudo apt update -y
           # sudo apt install -y build-essential gcc
           brew update
-          # brew unlink python@3.11
+          brew unlink python@3.11
         env:
           HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
           HOMEBREW_NO_AUTO_UPDATE: 1
