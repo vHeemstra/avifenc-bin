@@ -4,11 +4,6 @@
 
 You probably want the [`imagemin-avifenc`](https://github.com/vheemstra/imagemin-avifenc) plugin instead.
 
-***Note: At the moment, only Windows is supported.***
-
-*But if you are more familiar with Cmake and building binaries, feel free to have a look at [AOMedia's libavif](https://github.com/AOMediaCodec/libavif) and send your binaries using pull requests to this repository!*
-
-
 ## Install
 
 ```
