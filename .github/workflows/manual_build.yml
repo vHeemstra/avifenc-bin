@@ -98,7 +98,7 @@ jobs:
           deps="${{ env.homebrewdeps }}"
           for i in ${deps//,/ }
           do
-            brew list $i || brew install $i
+            brew list $i &>/dev/null || brew install $i
             # cp $(brew --cache $i) ./brew-cache/
           done
 
