@@ -41,8 +41,9 @@
     "index.d.ts",
     "cli.js",
     "lib",
-    "test",
-    "vendor"
+    "vendor/linux",
+    "vendor/macos",
+    "vendor/win"
   ],
   "keywords": [
     "imagemin",
