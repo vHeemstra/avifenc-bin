@@ -60,7 +60,7 @@ jobs:
       # - name: macOS - Restore Homebrew deps from cache
       #   if: ${{ matrix.os == 'macos-latest' }}
       #   id: cache-homebrew-deps-restore
-      #   uses: actions/cache/restore@v3
+      #   uses: actions/cache/restore@v4
       #   with:
       #     path: brew-cache
       #     key: ${{ runner.os }}-homebrew-deps-${{ hashFiles('homebrew-deps.txt') }}
@@ -105,7 +105,7 @@ jobs:
       # - name: macOS - Save Homebrew deps to cache
       #   if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' }}
       #   id: cache-homebrew-deps-save
-      #   uses: actions/cache/save@v3
+      #   uses: actions/cache/save@v4
       #   with:
       #     path: brew-cache
       #     key: ${{ steps.cache-homebrew-deps-restore.outputs.cache-primary-key }}
@@ -119,7 +119,7 @@ jobs:
 
       - name: Restore cached libyuv
         id: cache-libyuv-restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: |
             libavif/ext/libyuv
@@ -134,7 +134,7 @@ jobs:
       - name: Save libyuv to cache
         if: steps.cache-libyuv-restore.outputs.cache-hit != 'true'
         id: cache-libyuv-save
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         with:
           path: |
             libavif/ext/libyuv
@@ -143,7 +143,7 @@ jobs:
 
       - name: Restore cached libsharpyuv
         id: cache-libsharpyuv-restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: |
             libavif/ext/libwebp
@@ -158,7 +158,7 @@ jobs:
       - name: Save libsharpyuv to cache
         if: steps.cache-libsharpyuv-restore.outputs.cache-hit != 'true'
         id: cache-libsharpyuv-save
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         with:
           path: |
             libavif/ext/libwebp
@@ -167,7 +167,7 @@ jobs:
 
       - name: Restore cached aom
         id: cache-aom-restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: |
             libavif/ext/aom
@@ -182,7 +182,7 @@ jobs:
       - name: Save aom to cache
         if: steps.cache-aom-restore.outputs.cache-hit != 'true'
         id: cache-aom-save
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         with:
           path: |
             libavif/ext/aom
@@ -191,7 +191,7 @@ jobs:
 
       - name: Restore cached dav1d
         id: cache-dav1d-restore
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: |
             libavif/ext/dav1d
@@ -206,7 +206,7 @@ jobs:
       - name: Save dav1d to cache
         if: steps.cache-dav1d-restore.outputs.cache-hit != 'true'
         id: cache-dav1d-save
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         with:
           path: |
             libavif/ext/dav1d
