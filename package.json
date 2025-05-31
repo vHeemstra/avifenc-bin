@@ -30,7 +30,7 @@
     "avifenc": "cli.js"
   },
   "engines": {
-    "node": "^14.13.1 || >=16.0.0"
+    "node": "^20.19.0 || ^22.12.0 || >=23.1.0"
   },
   "scripts": {
     "postinstall": "node lib/install.js",
@@ -60,15 +60,15 @@
     "avif"
   ],
   "dependencies": {
-    "bin-build": "^3.0.0",
-    "bin-wrapper": "^4.0.1"
+    "@localnerve/bin-build": "^7.7.0",
+    "@xhmikosr/bin-wrapper": "^13.0.5"
   },
   "devDependencies": {
-    "ava": "^4.2.0",
-    "bin-check": "^4.1.0",
+    "ava": "^6.3.0",
+    "@xhmikosr/bin-check": "^7.0.3",
     "compare-size": "^3.0.0",
-    "execa": "^6.1.0",
+    "execa": "^9.6.0",
     "tempy": "^3.0.0",
-    "xo": "^0.48.0"
+    "xo": "^1.0.5"
   }
 }
