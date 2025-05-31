@@ -34,7 +34,7 @@
   },
   "scripts": {
     "postinstall": "node lib/install.js",
-    "test": "xo && ava --timeout=180s"
+    "test": "ava --timeout=180s"
   },
   "files": [
     "index.js",
@@ -64,11 +64,12 @@
     "@xhmikosr/bin-wrapper": "^13.0.5"
   },
   "devDependencies": {
-    "ava": "^6.4.0",
     "@xhmikosr/bin-check": "^7.0.3",
+    "ava": "^6.4.0",
     "compare-size": "^3.0.0",
     "execa": "^9.6.0",
     "tempy": "^3.0.0",
+    "typescript": "^5.8.3",
     "xo": "^1.1.0"
   }
 }
