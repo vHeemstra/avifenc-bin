@@ -64,7 +64,7 @@
     "@xhmikosr/bin-wrapper": "^13.0.5"
   },
   "devDependencies": {
-    "ava": "^6.3.0",
+    "ava": "^6.4.0",
     "@xhmikosr/bin-check": "^7.0.3",
     "compare-size": "^3.0.0",
     "execa": "^9.6.0",
