@@ -110,12 +110,10 @@ jobs:
       #     path: brew-cache
       #     key: ${{ steps.cache-homebrew-deps-restore.outputs.cache-primary-key }}
 
-
       - name: Clone libavif repo
         run: |
           git clone --depth 1 https://github.com/AOMediaCodec/libavif.git
           ls -la
-
 
       - name: Restore cached libyuv
         id: cache-libyuv-restore
@@ -140,7 +138,6 @@ jobs:
             libavif/ext/libyuv
           key: ${{ steps.cache-libyuv-restore.outputs.cache-primary-key }}
 
-
       - name: Restore cached libsharpyuv
         id: cache-libsharpyuv-restore
         uses: actions/cache/restore@v4
@@ -163,7 +160,6 @@ jobs:
           path: |
             libavif/ext/libwebp
           key: ${{ steps.cache-libsharpyuv-restore.outputs.cache-primary-key }}
-
 
       - name: Restore cached aom
         id: cache-aom-restore
@@ -188,7 +184,6 @@ jobs:
             libavif/ext/aom
           key: ${{ steps.cache-aom-restore.outputs.cache-primary-key }}
 
-
       - name: Restore cached dav1d
         id: cache-dav1d-restore
         uses: actions/cache/restore@v4
@@ -211,7 +206,6 @@ jobs:
           path: |
             libavif/ext/dav1d
           key: ${{ steps.cache-dav1d-restore.outputs.cache-primary-key }}
-
 
       - name: Build libavif binaries
         run: |

@@ -6,10 +6,9 @@ You probably want the [`imagemin-avifenc`](https://github.com/vheemstra/imagemin
 
 ## Install
 
+```shell
+npm install --save @vheemstra/avifenc-bin
 ```
-$ npm install --save @vheemstra/avifenc-bin
-```
-
 
 ## Usage
 
@@ -18,25 +17,23 @@ import {execFile} from 'node:child_process';
 import avifenc from '@vheemstra/avifenc-bin';
 
 execFile(avifenc, ['--output', 'output.avif', 'input.jpg'], err => {
-	if (err) {
-		throw err;
-	}
+  if (err) {
+    throw err;
+  }
 
-	console.log('Image converted!');
+  console.log('Image converted!');
 });
 ```
 
-
 ## CLI
 
-```
-$ npm install --global @vheemstra/avifenc-bin
-```
-
-```
-$ avifenc --help
+```shell
+npm install --global @vheemstra/avifenc-bin
 ```
 
+```shell
+avifenc --help
+```
 
 ## License & Info
 
