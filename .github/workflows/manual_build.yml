@@ -102,13 +102,13 @@ jobs:
             # cp $(brew --cache $i) ./brew-cache/
           done
 
-      # - name: macOS - Save Homebrew deps to cache
-      #   if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' }}
-      #   id: cache-homebrew-deps-save
-      #   uses: actions/cache/save@v4
-      #   with:
-      #     path: brew-cache
-      #     key: ${{ steps.cache-homebrew-deps-restore.outputs.cache-primary-key }}
+      - name: macOS - Save Homebrew deps to cache
+        if: ${{ matrix.os == 'macos-latest' && steps.cache-homebrew-deps-restore.outputs.cache-hit != 'true' }}
+        id: cache-homebrew-deps-save
+        uses: actions/cache/save@v4
+        with:
+          path: brew-cache
+          key: ${{ steps.cache-homebrew-deps-restore.outputs.cache-primary-key }}
 
       - name: Clone libavif repo
         run: |
