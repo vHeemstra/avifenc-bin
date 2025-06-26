@@ -1,53 +1,46 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import process from 'node:process';
-import {fileURLToPath} from 'node:url';
-import test from 'ava';
-import {execa} from 'execa';
-import {temporaryDirectory} from 'tempy';
-import binCheck from 'bin-check';
-import binBuild from 'bin-build';
-import compareSize from 'compare-size';
-import avifenc from '../index.js';
+import { execFile as execFileCB } from "node:child_process";
+import { readFileSync, constants as fsConstants } from "node:fs";
+import { access } from "node:fs/promises";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
+import test from "ava";
+import { temporaryDirectory } from "tempy";
+import getBinaryPathOrCommand from "../lib/index.js";
 
-const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url)));
+const execFile = promisify(execFileCB);
+const avifenc = getBinaryPathOrCommand(false);
 
-// TODO: make binary building
-// test('rebuild the avifenc binaries', async t => {
-// 	// Skip the test on Windows
-// 	if (process.platform === 'win32') {
-// 		t.pass();
-// 		return;
-// 	}
+const pkg = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url))
+);
 
-// 	const temporary = temporaryDirectory();
-// 	const source = fileURLToPath(new URL(`../vendor/source/libavif-${pkg.libavif_version}.tar.gz`, import.meta.url));
+test("return path to binary and verify that it is working", async (t) => {
+  let binaryInstalled = false;
+  try {
+    const { stdout } = await execFile(avifenc, ["--version"]);
 
-// 	await binBuild.file(source, [
-// 		`./configure --disable-shared --prefix="${temporary}" --bindir="${temporary}"`,
-// 		'make && make install',
-// 	]);
+    if (stdout.startsWith(`Version: ${pkg.libavif_version} `)) {
+      binaryInstalled = true;
+    }
+  } catch (err) {}
 
-// 	t.true(fs.existsSync(path.join(temporary, 'avifenc')));
-// });
-
-test('return path to binary and verify that it is working', async t => {
-	t.true(await binCheck(avifenc, ['--version']));
+  t.true(binaryInstalled);
 });
 
-test('minify and convert a JPG to AVIF', async t => {
-	const temporary = temporaryDirectory();
-	const src = fileURLToPath(new URL('fixtures/test.jpg', import.meta.url));
-	const dest = path.join(temporary, 'test.avif');
-	const args = [
-		'--output',
-		dest,
-		src
-	];
+test("minify and convert a JPG to AVIF", async (t) => {
+  const temporary = temporaryDirectory();
+  const src = fileURLToPath(new URL("fixtures/test.jpg", import.meta.url));
+  const dest = join(temporary, "test.avif");
+  const args = ["--output", dest, src];
 
-	await execa(avifenc, args);
-	const result = await compareSize(src, dest);
+  await execFile(avifenc, args);
 
-	t.true(result[dest] > 0);
-	// t.true(result[dest] < result[src]);
+  let fileExists = false;
+  try {
+    await access(dest, fsConstants.F_OK);
+    fileExists = true;
+  } catch {}
+
+  t.true(fileExists);
 });

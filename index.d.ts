@@ -1,2 +1,2 @@
-type binPath = string
-export default binPath;
+type binPathOrCommand = string
+export default binPathOrCommand;

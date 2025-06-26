@@ -6,12 +6,12 @@ You probably want the [`imagemin-avifenc`](https://github.com/vheemstra/imagemin
 
 ## Install
 
-```
-$ npm install --save @vheemstra/avifenc-bin
+```shell
+npm install --save @vheemstra/avifenc-bin
 ```
 
 
-## Usage
+## Use as package
 
 ```js
 import {execFile} from 'node:child_process';
@@ -27,14 +27,14 @@ execFile(avifenc, ['--output', 'output.avif', 'input.jpg'], err => {
 ```
 
 
-## CLI
+## Use as CLI command
 
-```
-$ npm install --global @vheemstra/avifenc-bin
+```shell
+npm install --global @vheemstra/avifenc-bin
 ```
 
-```
-$ avifenc --help
+```shell
+avifenc --help
 ```
 
 

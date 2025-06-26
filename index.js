@@ -1,3 +1,3 @@
-import lib from './lib/index.js';
+import getBinaryPathOrCommand from "./lib/index.js";
 
-export default lib.path();
+export default getBinaryPathOrCommand(true);
